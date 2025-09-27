@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synapse Collective - AI/ML Team</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated Background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at top, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+        }
+
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Particles */
+        .particle {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: rgba(16, 185, 129, 0.6);
+            border-radius: 50%;
+            animation: float 15s infinite;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            letter-spacing: 8px;
+            background: linear-gradient(135deg, #10b981, #3b82f6, #a855f7);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 5s ease infinite;
+            text-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            margin-top: 20px;
+            color: #94a3b8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Team Cards Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            padding: 60px 20px;
+            perspective: 2000px;
+        }
+
+        /* Card Styling */
+        .team-card {
+            position: relative;
+            height: 400px;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 2px solid;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .team-card:hover .card-inner {
+            box-shadow: 
+                0 0 30px rgba(16, 185, 129, 0.4),
+                inset 0 0 20px rgba(16, 185, 129, 0.1);
+        }
+
+        /* Individual Card Colors */
+        .sharvi-card .card-inner {
+            border-color: #3b82f6;
+        }
+        .sharvi-card:hover .card-inner {
+            border-color: #60a5fa;
+        }
+
+        .aadi-card .card-inner {
+            border-color: #10b981;
+        }
+        .aadi-card:hover .card-inner {
+            border-color: #34d399;
+        }
+
+        .kunj-card .card-inner {
+            border-color: #f97316;
+        }
+        .kunj-card:hover .card-inner {
+            border-color: #fb923c;
+        }
+
+        .vraj-card .card-inner {
+            border-color: #06b6d4;
+        }
+        .vraj-card:hover .card-inner {
+            border-color: #22d3ee;
+        }
+
+        /* Card Background Pattern */
+        .card-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 30%, currentColor 1px, transparent 1px),
+                radial-gradient(circle at 80% 70%, currentColor 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Card Content */
+        .card-icon {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(59, 130, 246, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            transition: transform 0.4s ease;
+        }
+
+        .team-card:hover .card-icon {
+            transform: scale(1.1) rotateY(360deg);
+        }
+
+        .card-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover .card-name {
+            transform: translateZ(20px);
+            text-shadow: 0 0 20px currentColor;
+        }
+
+        .card-role {
+            font-size: 1rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .card-tech {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        /* Glow Effect on Hover */
+        .glow-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.4), transparent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            pointer-events: none;
+        }
+
+        .team-card:hover .glow-effect {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+                letter-spacing: 4px;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .team-card {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="grid-pattern"></div>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <h1>TEAM</h1><br>
+            <h1>AI PAGLU</h1>
+            <p>Check the Individual Portfolio Websites</p>
+        </div>
+
+        <div class="team-grid">
+            <!-- Sharvi Shah Card -->
+            <div class="team-card sharvi-card" onclick="window.location.href='sharvi_portfolio.html'">
+                <div class="card-inner">
+                    <div class="card-pattern"></div>
+                    <div class="glow-effect"></div>
+                    <div class="card-icon">🧠</div>
+                    <h2 class="card-name">SHARVI SHAH</h2>
+                    <p class="card-role">Data Engineer</p>
+                </div>
+            </div>
+
+            <!-- Aadi Somaiya Card -->
+            <div class="team-card aadi-card" onclick="window.location.href='aadi_portfolio1.html'">
+                <div class="card-inner">
+                    <div class="card-pattern"></div>
+                    <div class="glow-effect"></div>
+                    <div class="card-icon">⚡</div>
+                    <h2 class="card-name">AADI SOMAIYA</h2>
+                    <p class="card-role">Product Architect</p>
+                </div>
+            </div>
+
+            <!-- Kunj Vadhiya Card -->
+            <div class="team-card kunj-card" onclick="window.location.href='kunj_portfolio.html'">
+                <div class="card-inner">
+                    <div class="card-pattern"></div>
+                    <div class="glow-effect"></div>
+                    <div class="card-icon">🔥</div>
+                    <h2 class="card-name">KUNJ VADHIYA</h2>
+                    <p class="card-role">ML Engineer</p>
+                </div>
+            </div>
+
+            <!-- Vraj Soni Card -->
+            <div class="team-card vraj-card" onclick="window.location.href='vraj_portfolio.html'">
+                <div class="card-inner">
+                    <div class="card-pattern"></div>
+                    <div class="glow-effect"></div>
+                    <div class="card-icon">💻</div>
+                    <h2 class="card-name">VRAJ SONI</h2>
+                    <p class="card-role">AI Engineer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 AI PAGLU /p>
+    </footer>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particleCount = 30;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                document.querySelector('.background').appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // Enhanced 3D card effect
+        const cards = document.querySelectorAll('.team-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `
+                    translateY(-10px) 
+                    scale(1.02) 
+                    rotateX(${rotateX}deg) 
+                    rotateY(${rotateY}deg)
+                `;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1) rotateX(0) rotateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
